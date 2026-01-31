@@ -1,16 +1,28 @@
-from agent.log_collector import collect_logs
 from agent.analyzer import analyze_logs
+from agent.log_loader import load_logs
+from agent.output_formatter import format_analysis
 
-print("\n🚀 REAL AI DEVOPS AGENT STARTED\n")
 
-logs = collect_logs()
+def main():
+    print("🚀 REAL AI DEVOPS AGENT STARTED")
 
-if not logs:
-    print("❌ No logs found")
-    exit()
+    # Load logs from mounted volume
+    logs = load_logs("/logs")
 
-result = analyze_logs(logs)
+    if not logs:
+        print("❌ No valid logs found")
+        return
 
-print("🧠 ANALYSIS RESULT\n")
-for item in result["details"]:
-    print(item)
+    print("\n🧠 Sending logs to LOCAL AI...\n")
+
+    # Run AI analysis
+    result = analyze_logs(logs)
+
+    print("🧠 ANALYSIS RESULT")
+
+    # ✅ Proper structured output (NO raw print)
+    format_analysis(result)
+
+
+if __name__ == "__main__":
+    main()

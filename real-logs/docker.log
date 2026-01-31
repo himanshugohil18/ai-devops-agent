@@ -1,1 +1,3 @@
-container killed due to OOMKilled
+ERROR: failed to start container
+permission denied while accessing docker.sock
+exit code 125
